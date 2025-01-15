@@ -1,32 +1,44 @@
+!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basic HTML, CSS, and JavaScript</title>
+    <title>JobLyft - Elevate Your Career</title>
     <link rel="stylesheet" href="styles.css">
-    <link name="mywebpage1" href="mywebpage1">
+    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-auth.js"></script>
 </head>
-
-<script src="script.js"></script>
-
-
-
 <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">JobLyft</div>
+        <div class="nav-links">
+            <a href="#" class="active">Home</a>
+            <a href="jobs.html">Find Jobs</a>
+            <a href="post-job.html">Post a Job</a>
+            <a href="dashboard.html" id="dashboardLink" style="display: none;">Dashboard</a>
+            <button id="loginBtn">Login</button>
+        </div>
+    </nav>
 
-    <header>
-        <h1>Welcome to Akshit Page</h1>
-    </header>
-
-    <br/> <br/>
-
-
-    <div class="content">
-        <p>This is a simple page with HTML, CSS, and JavaScript.</p>
-        <button onclick="changeBackgroundColor()">Click Me to Change Background Color</button>
+    <!-- Homepage Elevator Animation -->
+    <div class="elevator-container">
+        <div class="elevator-doors">
+            <div class="door left"></div>
+            <div class="door right"></div>
+        </div>
+        <div class="elevator-content">
+            <h1>Welcome to JobLyft</h1>
+            <p>Lift your job search with JobLyft—where students soar to new opportunities and employers elevate their job postings effortlessly.</p>
+            <div class="cta-buttons">
+                <a href="jobs.html" class="btn primary">Find Jobs</a>
+                <a href="post-job.html" class="btn secondary">Post a Job</a>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
-
 </body>
 </html>
