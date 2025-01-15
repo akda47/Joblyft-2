@@ -5,102 +5,148 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JobLyft - School Job Portal</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"></script>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="logo">JobLyft</div>
-        <div class="nav-links">
-            <a href="#home">Home</a>
-            <a href="#jobs">Find Jobs</a>
-            <a href="#post">Post Jobs</a>
-            <a href="#dashboard">Dashboard</a>
-        </div>
-    </nav>
-
     <!-- Homepage with Elevator Animation -->
-    <section id="home" class="page active">
+    <div class="elevator-container" id="elevatorContainer">
         <div class="elevator">
-            <div class="elevator-doors">
-                <div class="door left"></div>
-                <div class="door right"></div>
+            <div class="elevator-shaft">
+                <div class="elevator-car">
+                    <div class="elevator-doors">
+                        <div class="door left"></div>
+                        <div class="door right"></div>
+                    </div>
+                    <div class="elevator-interior">
+                        <div class="welcome-content">
+                            <h1 class="elevator-title">JobLyft</h1>
+                            <p class="elevator-tagline">"Lift your job search with JobLyft—where students soar to new opportunities and employers elevate their job postings effortlessly."</p>
+                            <button class="get-started-btn" onclick="navigateToMain()">Get Started</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="floor-indicator">1</div>
             </div>
-            <div class="elevator-content">
-                <h1>JobLyft</h1>
-                <p>Lift your job search with JobLyft—where students soar to new opportunities and employers elevate their job postings effortlessly.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Job Search Page -->
-    <section id="jobs" class="page">
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Search jobs...">
-            <div class="filters">
-                <select id="locationFilter">
-                    <option value="">Location</option>
-                </select>
-                <select id="typeFilter">
-                    <option value="">Job Type</option>
-                </select>
-                <select id="industryFilter">
-                    <option value="">Industry</option>
-                </select>
-            </div>
-            <button id="searchButton">Search</button>
-        </div>
-        <div id="jobListings" class="job-listings"></div>
-    </section>
-
-    <!-- Employer Posting Page -->
-    <section id="post" class="page">
-        <form id="jobPostForm" class="job-post-form">
-            <h2>Post a New Job</h2>
-            <input type="text" placeholder="Company Name" required>
-            <input type="text" placeholder="Job Title" required>
-            <textarea placeholder="Job Description" required></textarea>
-            <textarea placeholder="Qualifications" required></textarea>
-            <input type="text" placeholder="Salary (Optional)">
-            <input type="email" placeholder="Contact Email" required>
-            <button type="submit">Submit Job Posting</button>
-        </form>
-    </section>
-
-    <!-- Employer Dashboard -->
-    <section id="employer-dashboard" class="page">
-        <div class="dashboard-container">
-            <div class="tabs">
-                <button class="tab-btn active" data-tab="pending">Pending</button>
-                <button class="tab-btn" data-tab="approved">Approved</button>
-                <button class="tab-btn" data-tab="rejected">Rejected</button>
-            </div>
-            <div id="jobsList" class="jobs-list"></div>
-        </div>
-    </section>
-
-    <!-- Student Dashboard -->
-    <section id="student-dashboard" class="page">
-        <div class="dashboard-container">
-            <h2>My Applications</h2>
-            <div class="applications-list">
-                <div class="applications-pending"></div>
-                <div class="applications-submitted"></div>
-                <div class="applications-rejected"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Popup Modal for Confirmations -->
-    <div id="modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <p id="modal-message"></p>
         </div>
     </div>
 
+    <!-- Main Application -->
+    <div class="main-content" id="mainContent" style="display: none;">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="logo">JobLyft</div>
+            <div class="nav-links">
+                <a href="#" onclick="showSection('jobSearch')">Search Jobs</a>
+                <a href="#" onclick="showSection('employerPost')">Post a Job</a>
+                <a href="#" onclick="showSection('employerDashboard')" id="employerLink">Employer Dashboard</a>
+                <a href="#" onclick="showSection('studentDashboard')" id="studentLink">Student Dashboard</a>
+                <a href="#" onclick="showSection('adminPanel')" id="adminLink" style="display: none;">Admin Panel</a>
+                <button id="authButton" onclick="handleAuth()">Login</button>
+            </div>
+        </nav>
+
+        <!-- Job Search Page -->
+        <section id="jobSearch" class="section">
+            <div class="search-container">
+                <input type="text" id="jobSearchBar" placeholder="Search for jobs..." class="search-bar">
+                <div class="filters">
+                    <select id="locationFilter" class="filter">
+                        <option value="">Location</option>
+                    </select>
+                    <select id="jobTypeFilter" class="filter">
+                        <option value="">Job Type</option>
+                        <option value="fulltime">Full Time</option>
+                        <option value="parttime">Part Time</option>
+                        <option value="internship">Internship</option>
+                    </select>
+                    <select id="industryFilter" class="filter">
+                        <option value="">Industry</option>
+                    </select>
+                    <button onclick="applyFilters()" class="filter-button">Apply Filters</button>
+                </div>
+            </div>
+            <div id="jobListings" class="job-listings"></div>
+        </section>
+
+        <!-- Employer Posting Page -->
+        <section id="employerPost" class="section" style="display: none;">
+            <div class="post-container">
+                <h2>Post a New Job</h2>
+                <form id="jobPostForm" class="job-post-form">
+                    <input type="text" name="companyName" placeholder="Company Name" required>
+                    <input type="text" name="jobTitle" placeholder="Job Title" required>
+                    <select name="jobType" required>
+                        <option value="">Select Job Type</option>
+                        <option value="fulltime">Full Time</option>
+                        <option value="parttime">Part Time</option>
+                        <option value="internship">Internship</option>
+                    </select>
+                    <input type="text" name="location" placeholder="Location" required>
+                    <select name="industry" required>
+                        <option value="">Select Industry</option>
+                        <!-- Industries will be populated via JavaScript -->
+                    </select>
+                    <textarea name="description" placeholder="Job Description" required></textarea>
+                    <textarea name="qualifications" placeholder="Required Qualifications" required></textarea>
+                    <input type="number" name="salary" placeholder="Salary (Optional)">
+                    <input type="email" name="contactEmail" placeholder="Contact Email" required>
+                    <button type="submit" class="submit-button">Submit Job Posting</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Employer Dashboard -->
+        <section id="employerDashboard" class="section" style="display: none;">
+            <div class="dashboard-container">
+                <h2>Employer Dashboard</h2>
+                <div class="status-tabs">
+                    <button onclick="showEmployerTab('active')">Active Postings</button>
+                    <button onclick="showEmployerTab('pending')">Pending Approval</button>
+                    <button onclick="showEmployerTab('applications')">Applications Received</button>
+                </div>
+                <div id="employerContent" class="dashboard-content"></div>
+            </div>
+        </section>
+
+        <!-- Student Dashboard -->
+        <section id="studentDashboard" class="section" style="display: none;">
+            <div class="dashboard-container">
+                <h2>My Applications</h2>
+                <div class="status-tabs">
+                    <button onclick="showStudentTab('pending')">Pending</button>
+                    <button onclick="showStudentTab('accepted')">Accepted</button>
+                    <button onclick="showStudentTab('rejected')">Rejected</button>
+                </div>
+                <div id="applicationsList" class="applications-list"></div>
+            </div>
+        </section>
+
+        <!-- Admin Panel -->
+        <section id="adminPanel" class="section" style="display: none;">
+            <div class="admin-container">
+                <h2>Admin Dashboard</h2>
+                <div class="status-tabs">
+                    <button onclick="showAdminTab('pending')">Pending Review</button>
+                    <button onclick="showAdminTab('approved')">Approved</button>
+                    <button onclick="showAdminTab('rejected')">Rejected</button>
+                </div>
+                <div id="adminContent" class="admin-content"></div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modals -->
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <h3 id="modalTitle"></h3>
+            <p id="modalMessage"></p>
+            <button onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script src="firebase-config.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
