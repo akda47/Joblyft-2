@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Submit a Job Posting</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Submit a Job Posting</h1>
+        <p>Please fill out the form below to submit a job posting to our site.</p>
+    </header>
+
+    <div class="form-container">
+        <form id="jobForm">
+            <div class="form-group">
+                <label for="companyName">Company Name:</label>
+                <input type="text" id="companyName" name="companyName" required>
+            </div>
+
+            <div class="form-group">
+                <label for="jobTitle">Job Title:</label>
+                <input type="text" id="jobTitle" name="jobTitle" required>
+            </div>
+
+            <div class="form-group">
+                <label for="jobDescription">Job Description:</label>
+                <textarea id="jobDescription" name="jobDescription" rows="5" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="jobLocation">Job Location:</label>
+                <input type="text" id="jobLocation" name="jobLocation" required>
+            </div>
+
+            <div class="form-group">
+                <label for="jobType">Job Type:</label>
+                <select id="jobType" name="jobType" required>
+                    <option value="fullTime">Full-time</option>
+                    <option value="partTime">Part-time</option>
+                    <option value="contract">Contract</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="salary">Salary (Optional):</label>
+                <input type="text" id="salary" name="salary">
+            </div>
+
+            <div class="form-group">
+                <label for="contactEmail">Contact Email:</label>
+                <input type="email" id="contactEmail" name="contactEmail" required>
+            </div>
+
+            <div class="form-group">
+                <button type="submit">Submit Job Posting</button>
+            </div>
+        </form>
+    </div>
+
+    <footer>
+        <p>© 2024 Job Portal. All Rights Reserved.</p>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
