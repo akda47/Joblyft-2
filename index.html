@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="JobLyft - A school job portal connecting students with employers">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <title>JobLyft - School Job Portal</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
@@ -11,7 +13,7 @@
 </head>
 <body>
     <!-- Homepage with Elevator Animation -->
-    <div class="elevator-container" id="elevatorContainer">
+    <div class="elevator-container" id="elevatorContainer" role="main">
         <div class="elevator">
             <div class="elevator-shaft">
                 <div class="elevator-car">
@@ -22,8 +24,10 @@
                     <div class="elevator-interior">
                         <div class="welcome-content">
                             <h1 class="elevator-title">JobLyft</h1>
-                            <p class="elevator-tagline">"Lift your job search with JobLyft—where students soar to new opportunities and employers elevate their job postings effortlessly."</p>
-                            <button class="get-started-btn" onclick="navigateToMain()">Get Started</button>
+                            <p class="elevator-tagline" aria-label="Website tagline">
+                                "Lift your job search with JobLyft—where students soar to new opportunities and employers elevate their job postings effortlessly."
+                            </p>
+                            <button class="get-started-btn" onclick="navigateToMain()" aria-label="Get Started">Get Started</button>
                         </div>
                     </div>
                 </div>
@@ -33,10 +37,12 @@
     </div>
 
     <!-- Main Application -->
-    <div class="main-content" id="mainContent" style="display: none;">
+    <div class="main-content" id="mainContent" style="display: none;" role="main">
         <!-- Navigation -->
-        <nav class="navbar">
-            <div class="logo">JobLyft</div>
+        <nav class="navbar" role="navigation" aria-label="Main navigation">
+            <div class="logo">
+                <a href="/" aria-label="JobLyft Home">JobLyft</a>
+            </div>
             <div class="nav-links">
                 <a href="#" onclick="showSection('jobSearch')">Search Jobs</a>
                 <a href="#" onclick="showSection('employerPost')">Post a Job</a>
@@ -48,10 +54,10 @@
         </nav>
 
         <!-- Job Search Page -->
-        <section id="jobSearch" class="section">
+        <section id="jobSearch" class="section" aria-label="Job Search">
             <div class="search-container">
-                <input type="text" id="jobSearchBar" placeholder="Search for jobs..." class="search-bar">
-                <div class="filters">
+                <input type="text" id="jobSearchBar" placeholder="Search for jobs..." class="search-bar" aria-label="Search jobs">
+                <div class="filters" role="group" aria-label="Job filters">
                     <select id="locationFilter" class="filter">
                         <option value="">Location</option>
                     </select>
@@ -71,12 +77,18 @@
         </section>
 
         <!-- Employer Posting Page -->
-        <section id="employerPost" class="section" style="display: none;">
+        <section id="employerPost" class="section" style="display: none;" aria-label="Post a Job">
             <div class="post-container">
                 <h2>Post a New Job</h2>
-                <form id="jobPostForm" class="job-post-form">
-                    <input type="text" name="companyName" placeholder="Company Name" required>
-                    <input type="text" name="jobTitle" placeholder="Job Title" required>
+                <form id="jobPostForm" class="job-post-form" novalidate>
+                    <div class="form-group">
+                        <label for="companyName">Company Name</label>
+                        <input type="text" id="companyName" name="companyName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="jobTitle">Job Title</label>
+                        <input type="text" id="jobTitle" name="jobTitle" required>
+                    </div>
                     <select name="jobType" required>
                         <option value="">Select Job Type</option>
                         <option value="fulltime">Full Time</option>
@@ -138,12 +150,18 @@
     </div>
 
     <!-- Modals -->
-    <div id="confirmationModal" class="modal">
+    <div id="confirmationModal" class="modal" role="dialog" aria-labelledby="modalTitle" aria-modal="true">
         <div class="modal-content">
             <h3 id="modalTitle"></h3>
             <p id="modalMessage"></p>
             <button onclick="closeModal()">Close</button>
         </div>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div id="loadingSpinner" class="loading-spinner" role="alert" aria-busy="true" style="display: none;">
+        <div class="spinner"></div>
+        <span class="sr-only">Loading...</span>
     </div>
 
     <script src="firebase-config.js"></script>
